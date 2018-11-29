@@ -3,9 +3,35 @@
 const apiKey = '601c14869998103548596b0a4d73014d'
 const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
-// 1. We need to call to the last.fm API and pull the top artists from tag that the user submits
+function displayResults(response) {
 
-  // First we handle the form to keep it from submitting nothing and we pull the value from the search
+  console.log(`displayResults working`);
+}
+
+function getBio(response, num) {
+  const mbid = response.topartists.artist[num].mbid;
+  console.log(mbid);
+  fetch(`http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=${mbid}&api_key=${apiKey}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
+    })
+    .then(responseJson => {
+      console.log(responseJson);
+      displayResults(responseJson);
+    })
+    .catch(err => {
+      $(`#js-error`).text(`Something went wrong: ${err.message}`);
+    })
+}
+
+function pickRandom() {
+  return Math.floor(Math.random(0, 20) * Math.floor(20));
+}
+
 function callLastFm(URL) {
   fetch(URL)
     .then(response => {
@@ -15,7 +41,11 @@ function callLastFm(URL) {
         throw new Error(response.statusText);
       }
     })
-    .then(responseJson => console.log(responseJson))
+    .then(responseJson => {
+      console.log(responseJson);
+      let artistNo = pickRandom();
+      getBio(responseJson, artistNo);
+    })
     .catch(err => {
       $(`#js-error`).text(`Something went wrong: ${err.message}`);
     })
@@ -50,9 +80,6 @@ function handleForm() {
   })
   console.log('handleForm working');
 }
-  // Then we take the search value and push it into a URL that calls the api
-
-  // Then we call the API to get a JSON response
 
 // 2. After that we need to choose a random band from the list and push it to the DOM
 
