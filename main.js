@@ -7,19 +7,31 @@ const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
   // First we handle the form to keep it from submitting nothing and we pull the value from the search
 function callLastFm(URL) {
-  
+  fetch(URL)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
+    })
+    .then(responseJson => console.log(responseJson))
+    .catch(err => {
+      $(`#js-error`).text(`Something went wrong: ${err.message}`);
+    })
+  console.log(`callLastFm working`);
 }
 
 
 function createUrl(params) {
-  const URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
+  const URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=20&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
   console.log(URL);
   callLastFm(URL);
   console.log('createUrl working');
 }
 
 function createParams(genre, apiKey) {
-let pageNo = Math.floor(Math.random(1, 4) * Math.floor(4)) + 1;
+let pageNo = Math.floor(Math.random(0, 10) * Math.floor(10)) + 1;
 const params = {
   key: apiKey,
   tag: genre,
