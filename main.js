@@ -4,14 +4,16 @@ const apiKey = '601c14869998103548596b0a4d73014d'
 const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
 function displayResults(response) {
-
+  
   console.log(`displayResults working`);
 }
 
 function getBio(response, num) {
   const mbid = response.topartists.artist[num].mbid;
   console.log(mbid);
-  fetch(`http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=${mbid}&api_key=${apiKey}`)
+  const bioURL = `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=${mbid}&api_key=${apiKey}&format=json`;
+  console.log(bioURL);
+  fetch(bioURL)
     .then(response => {
       if (response.ok) {
         return response.json();
