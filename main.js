@@ -71,7 +71,7 @@ function displayResults(response) {
 function getBio(response, num) {
   const name = response.topartists.artist[num].name;
   const fixedName = `${encodeURIComponent(name)}`;
-  const bioURL = `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
+  const bioURL = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
   console.log(bioURL);
   fetch(bioURL)
     .then(response => {
