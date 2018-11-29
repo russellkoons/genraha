@@ -8,13 +8,18 @@ function displayYoutube(response) {
   console.log(response);
   $(`#videos`).empty();
   for (let i = 0; i < response.items.length; i++) {
-    console.log(response.items[i].snippet);
+    $(`#videos`).append(
+      `<a href="https://www.youtube.com/watch?v=${response.items[i].id.videoId}">
+      <img src="${response.items[i].snippet.thumbnails.default.url}" alt="${response.items[i].snippet.title}" />
+      <p>${response.items[i].snippet.title}</p>
+      </a>`
+    )
   }
   console.log(`displayYoutube working`);
 }
 
-function callYoutube(name) {
-  fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${youtubeKey}&q=${name}%20music`)
+function callYoutube(URL) {
+  fetch(URL)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -28,7 +33,17 @@ function callYoutube(name) {
     .catch(err => {
       $(`#js-error`).text(`Something went wrong: ${err.message}`);
     })
-  console.log(`callYoutube working`);  
+  console.log(`callYoutube working`);
+}
+
+function handleYoutubeUrl(response) {
+  const youtubeName = response.artist.name;
+  const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
+  const artistGenre = response.artist.tags.tag[0].name;
+  const fixedGenre = `${encodeURIComponent(artistGenre)}`
+  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"%20${fixedGenre}`;
+  console.log(youtubeUrl);
+  return youtubeUrl;
 }
 
 function displayResults(response) {
@@ -46,9 +61,10 @@ function displayResults(response) {
       <li><a href="${response.artist.similar.artist[2].url}">${response.artist.similar.artist[2].name}</a></li>
     </ul>`
   );
-  const youtubeName = response.artist.name;
-  const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
-  callYoutube(fixedYoutube);
+  const youtubeUrl = handleYoutubeUrl(response);
+  // const youtubeName = response.artist.name;
+  // const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
+  callYoutube(youtubeUrl);
   console.log(`displayResults working`);
 }
 
@@ -127,7 +143,5 @@ function handleForm() {
   })
   console.log('handleForm working');
 }
-
-// 3. Call the youtube API with a search for videos from the artist
 
 $(handleForm());
