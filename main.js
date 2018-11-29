@@ -114,7 +114,7 @@ function callLastFm(URL) {
 
 
 function createUrl(params) {
-  const URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=10&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
+  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=10&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
   console.log(URL);
   callLastFm(URL);
   console.log('createUrl working');

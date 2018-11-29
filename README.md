@@ -1,0 +1,1 @@
+With genre-ha you can find new artists in genres that you already know and love
