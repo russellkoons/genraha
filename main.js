@@ -1,11 +1,36 @@
 'use strict';
 
 const apiKey = '601c14869998103548596b0a4d73014d'
+const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E'
 const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
+
+function displayYoutube(response) {
+  console.log(response);
+  console.log(`displayYoutube working`);
+}
+
+function callYoutube(name) {
+  fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${youtubeKey}&q=${name}`)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.statusText);
+      }
+    })
+    .then(responseJson => {
+      displayYoutube(responseJson);
+    })
+    .catch(err => {
+      $(`#js-error`).text(`Something went wrong: ${err.message}`);
+    })
+  console.log(`callYoutube working`);  
+}
 
 function displayResults(response) {
   $(`#js-error`).empty();
   $(`#artistinfo`).empty();
+  // I need an error for when there is no image of the artist //
   $(`#artistinfo`).append(
     `<h2>${response.artist.name}</h2>
     <img src="${response.artist.image[3][`#text`]}" alt="${response.artist.name}" />
@@ -17,6 +42,9 @@ function displayResults(response) {
       <li><a href="${response.artist.similar.artist[2].url}">${response.artist.similar.artist[2].name}</a></li>
     </ul>`
   );
+  const youtubeName = response.artist.name;
+  const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
+  callYoutube(fixedYoutube);
   console.log(`displayResults working`);
 }
 
@@ -61,7 +89,7 @@ function callLastFm(URL) {
       getBio(responseJson, artistNo);
     })
     .catch(err => {
-      $(`#js-error`).text(`Something went wrong: ${err.message}`);
+      $(`#js-error`).text(`Genre not found`);
     })
   console.log(`callLastFm working`);
 }
@@ -95,8 +123,6 @@ function handleForm() {
   })
   console.log('handleForm working');
 }
-
-// 2. After that we need to choose a random band from the list and push it to the DOM
 
 // 3. Call the youtube API with a search for videos from the artist
 
