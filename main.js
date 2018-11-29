@@ -6,11 +6,15 @@ const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
 function displayYoutube(response) {
   console.log(response);
+  $(`#videos`).empty();
+  for (let i = 0; i < response.items.length; i++) {
+    console.log(response.items[i].snippet);
+  }
   console.log(`displayYoutube working`);
 }
 
 function callYoutube(name) {
-  fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${youtubeKey}&q=${name}`)
+  fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${youtubeKey}&q=${name}%20music`)
     .then(response => {
       if (response.ok) {
         return response.json();
