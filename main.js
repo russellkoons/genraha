@@ -4,14 +4,26 @@ const apiKey = '601c14869998103548596b0a4d73014d'
 const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
 function displayResults(response) {
-  
+  $(`#js-error`).empty();
+  $(`#artistinfo`).empty();
+  $(`#artistinfo`).append(
+    `<h2>${response.artist.name}</h2>
+    <img src="${response.artist.image[3][`#text`]}" alt="${response.artist.name}" />
+    <p>${response.artist.bio.summary}</p>
+    <h3>Similar Artists</h3>
+    <ul>
+      <li><a href="${response.artist.similar.artist[0].url}">${response.artist.similar.artist[0].name}</a></li>
+      <li><a href="${response.artist.similar.artist[1].url}">${response.artist.similar.artist[1].name}</a></li>
+      <li><a href="${response.artist.similar.artist[2].url}">${response.artist.similar.artist[2].name}</a></li>
+    </ul>`
+  );
   console.log(`displayResults working`);
 }
 
 function getBio(response, num) {
-  const mbid = response.topartists.artist[num].mbid;
-  console.log(mbid);
-  const bioURL = `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=${mbid}&api_key=${apiKey}&format=json`;
+  const name = response.topartists.artist[num].name;
+  const fixedName = `${encodeURIComponent(name)}`;
+  const bioURL = `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
   console.log(bioURL);
   fetch(bioURL)
     .then(response => {
@@ -31,7 +43,7 @@ function getBio(response, num) {
 }
 
 function pickRandom() {
-  return Math.floor(Math.random(0, 20) * Math.floor(20));
+  return Math.floor(Math.random(0, 10) * Math.floor(10));
 }
 
 function callLastFm(URL) {
@@ -56,7 +68,7 @@ function callLastFm(URL) {
 
 
 function createUrl(params) {
-  const URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=20&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
+  const URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=10&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
   console.log(URL);
   callLastFm(URL);
   console.log('createUrl working');
@@ -78,7 +90,8 @@ function handleForm() {
   $(`#js-submit`).click(event => {
     event.preventDefault();
     const genre = $(`#genre`).val();
-    createParams(genre, apiKey);
+    const tag = `${encodeURIComponent(genre)}`;
+    createParams(tag, apiKey);
   })
   console.log('handleForm working');
 }
