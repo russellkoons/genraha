@@ -6,10 +6,15 @@ const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 // 1. We need to call to the last.fm API and pull the top artists from tag that the user submits
 
   // First we handle the form to keep it from submitting nothing and we pull the value from the search
+function callLastFm(URL) {
+  
+}
+
 
 function createUrl(params) {
-  const URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=${params.tag}&page=${params.page}&key=${params.key}&format=json`
+  const URL = `http://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
   console.log(URL);
+  callLastFm(URL);
   console.log('createUrl working');
 }
 
