@@ -62,8 +62,6 @@ function displayResults(response) {
     </ul>`
   );
   const youtubeUrl = handleYoutubeUrl(response);
-  // const youtubeName = response.artist.name;
-  // const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
   callYoutube(youtubeUrl);
   console.log(`displayResults working`);
 }
