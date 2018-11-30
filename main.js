@@ -7,13 +7,18 @@ const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 function displayYoutube(response) {
   console.log(response);
   $(`#videos`).empty();
-  for (let i = 0; i < response.items.length; i++) {
-    $(`#videos`).append(
-      `<a href="https://www.youtube.com/watch?v=${response.items[i].id.videoId}">
-      <img src="${response.items[i].snippet.thumbnails.default.url}" alt="${response.items[i].snippet.title}" />
-      <p>${response.items[i].snippet.title}</p>
-      </a>`
-    )
+  $(`#videos`).append(`<h3>Watch on Youtube!</h3>`)
+  if (response.items.length === 0) {
+    $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure</p>`)
+  } else {
+    for (let i = 0; i < response.items.length; i++) {
+      $(`#videos`).append(
+        `<a href="https://www.youtube.com/watch?v=${response.items[i].id.videoId}">
+        <img src="${response.items[i].snippet.thumbnails.default.url}" alt="${response.items[i].snippet.title}" />
+        <p>${response.items[i].snippet.title}</p>
+        </a>`
+      )
+    }
   }
   console.log(`displayYoutube working`);
 }
