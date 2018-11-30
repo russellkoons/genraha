@@ -5,7 +5,6 @@ const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E'
 const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
 function displayYoutube(response) {
-  console.log(response);
   $(`#videos`).empty();
   $(`#videos`).append(`<h3>Watch on Youtube!</h3>`)
   if (response.items.length === 0) {
@@ -47,14 +46,12 @@ function handleYoutubeUrl(response) {
   const artistGenre = response.artist.tags.tag[0].name;
   const fixedGenre = `${encodeURIComponent(artistGenre)}`
   const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"%20${fixedGenre}`;
-  console.log(youtubeUrl);
   return youtubeUrl;
 }
 
 function displayResults(response) {
   $(`#js-error`).empty();
   $(`#artistinfo`).empty();
-  // I need an error for when there is no image of the artist //
   if (response.artist.image[3][`#text`] === "") {
     $(`#artistinfo`).append(
       `<h2>${response.artist.name}</h2>
@@ -93,7 +90,6 @@ function getBio(response) {
   const name = response.topartists.artist[num].name;
   const fixedName = `${encodeURIComponent(name)}`;
   const bioURL = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
-  console.log(bioURL);
   fetch(bioURL)
     .then(response => {
       if (response.ok) {
@@ -103,12 +99,12 @@ function getBio(response) {
       }
     })
     .then(responseJson => {
-      console.log(responseJson);
       displayResults(responseJson);
     })
     .catch(err => {
       $(`#js-error`).text(`Something went wrong: ${err.message}`);
     })
+  console.log(`getBio working`);
 }
 
 function callLastFm(URL) {
@@ -121,7 +117,6 @@ function callLastFm(URL) {
       }
     })
     .then(responseJson => {
-      console.log(responseJson);
       getBio(responseJson);
     })
     .catch(err => {
@@ -133,7 +128,6 @@ function callLastFm(URL) {
 
 function createUrl(params) {
   const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
-  console.log(URL);
   callLastFm(URL);
   console.log('createUrl working');
 }
@@ -145,7 +139,6 @@ const params = {
   tag: genre,
   page: pageNo
 }
-console.log(params);
 createUrl(params);
 console.log(`createParams working`);
 }
