@@ -88,7 +88,8 @@ function displayResults(response) {
   console.log(`displayResults working`);
 }
 
-function getBio(response, num) {
+function getBio(response) {
+  let num = Math.floor(Math.random(0, response.topartists.artist.length) * Math.floor(response.topartists.artist.length));
   const name = response.topartists.artist[num].name;
   const fixedName = `${encodeURIComponent(name)}`;
   const bioURL = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
@@ -110,10 +111,6 @@ function getBio(response, num) {
     })
 }
 
-function pickRandom() {
-  return Math.floor(Math.random(0, 100) * Math.floor(100));
-}
-
 function callLastFm(URL) {
   fetch(URL)
     .then(response => {
@@ -125,8 +122,7 @@ function callLastFm(URL) {
     })
     .then(responseJson => {
       console.log(responseJson);
-      let artistNo = pickRandom();
-      getBio(responseJson, artistNo);
+      getBio(responseJson);
     })
     .catch(err => {
       $(`#js-error`).text(`Genre not found`);
