@@ -9,7 +9,7 @@ function displayYoutube(response) {
   $(`#videos`).empty();
   $(`#videos`).append(`<h3>Watch on Youtube!</h3>`)
   if (response.items.length === 0) {
-    $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure</p>`)
+    $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure!</p>`)
   } else {
     for (let i = 0; i < response.items.length; i++) {
       $(`#videos`).append(
@@ -55,15 +55,27 @@ function displayResults(response) {
   $(`#js-error`).empty();
   $(`#artistinfo`).empty();
   // I need an error for when there is no image of the artist //
-  $(`#artistinfo`).append(
-    `<h2>${response.artist.name}</h2>
-    <img src="${response.artist.image[3][`#text`]}" alt="${response.artist.name}" />
-    <p>${response.artist.bio.summary}</p>
-    <h3>Similar Artists</h3>
-    <ul id="similar">
-  
-    </ul>`
-  );
+  if (response.artist.image[3][`#text`] === "") {
+    $(`#artistinfo`).append(
+      `<h2>${response.artist.name}</h2>
+      <p>Artist image not found</p>
+      <p>${response.artist.bio.summary}</p>
+      <h3>Similar Artists</h3>
+      <ul id="similar">
+    
+      </ul>`
+    );
+  } else {
+    $(`#artistinfo`).append(
+      `<h2>${response.artist.name}</h2>
+      <img src="${response.artist.image[3][`#text`]}" alt="${response.artist.name}" />
+      <p>${response.artist.bio.summary}</p>
+      <h3>Similar Artists</h3>
+      <ul id="similar">
+    
+      </ul>`
+    );
+  }
   if (response.artist.similar.artist.length === 0) {
     $(`#similar`).append(`<li>No similar artists found</li>`);
   } else{
