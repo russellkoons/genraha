@@ -55,12 +55,17 @@ function displayResults(response) {
     <img src="${response.artist.image[3][`#text`]}" alt="${response.artist.name}" />
     <p>${response.artist.bio.summary}</p>
     <h3>Similar Artists</h3>
-    <ul>
-      <li><a href="${response.artist.similar.artist[0].url}">${response.artist.similar.artist[0].name}</a></li>
-      <li><a href="${response.artist.similar.artist[1].url}">${response.artist.similar.artist[1].name}</a></li>
-      <li><a href="${response.artist.similar.artist[2].url}">${response.artist.similar.artist[2].name}</a></li>
+    <ul id="similar">
+  
     </ul>`
   );
+  if (response.artist.similar.artist.length === 0) {
+    $(`#similar`).append(`<li>No similar artists found</li>`);
+  } else{
+    for (let i = 0; i < response.artist.similar.artist.length; i++) {
+      $(`#similar`).append(`<li><a href="${response.artist.similar.artist[i].url}">${response.artist.similar.artist[i].name}</a></li>`);
+    }
+  }
   const youtubeUrl = handleYoutubeUrl(response);
   callYoutube(youtubeUrl);
   console.log(`displayResults working`);
@@ -89,7 +94,7 @@ function getBio(response, num) {
 }
 
 function pickRandom() {
-  return Math.floor(Math.random(0, 10) * Math.floor(10));
+  return Math.floor(Math.random(0, 100) * Math.floor(100));
 }
 
 function callLastFm(URL) {
@@ -114,14 +119,14 @@ function callLastFm(URL) {
 
 
 function createUrl(params) {
-  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=10&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
+  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
   console.log(URL);
   callLastFm(URL);
   console.log('createUrl working');
 }
 
 function createParams(genre, apiKey) {
-let pageNo = Math.floor(Math.random(0, 10) * Math.floor(10)) + 1;
+let pageNo = 1
 const params = {
   key: apiKey,
   tag: genre,
