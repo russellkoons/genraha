@@ -71,16 +71,14 @@ function displayResults(response) {
       <img src="${response.artist.image[3][`#text`]}" alt="${response.artist.name}" />
       <p>${response.artist.bio.summary}</p>
       <h3>Similar Artists</h3>
-      <ul id="similar">
-    
-      </ul>`
+      `
     );
   }
   if (response.artist.similar.artist.length === 0) {
-    $(`#similar`).append(`<li>No similar artists found</li>`);
+    $(`#artistinfo`).append(`<p>No similar artists found</p>`);
   } else{
     for (let i = 0; i < response.artist.similar.artist.length; i++) {
-      $(`#similar`).append(`<li><a href="${response.artist.similar.artist[i].url}">${response.artist.similar.artist[i].name}</a></li>`);
+      $(`#artistinfo`).append(`<a href="${response.artist.similar.artist[i].url}">${response.artist.similar.artist[i].name}</a><br />`);
     }
   }
   const youtubeUrl = handleYoutubeUrl(response);

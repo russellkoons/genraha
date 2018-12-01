@@ -4,13 +4,21 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    font-family: sans-serif;
   }
 
 header {
-    display: inline;
-    font-family: 'Text Me One', sans-serif;
+    background-color: burlywood;
     text-align: center;
-    background-color: tan;
+    padding: 5px 10px 10px 10px;
+    margin-bottom: 20px;
+    border: 3px solid;
+    border-color: bisque;
+    border-radius: 10px;
+}
+
+h1 {
+    font-family: 'Text Me One', sans-serif;
 }
 
 .row {
@@ -33,7 +41,16 @@ header {
 
 .col-3 {
     width: 20%;
-    height: 700px;
+    max-height: 700px;
+    float: right;
+    text-align: center;
+}
+
+.col-4 {
+    width: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
 }
 
 .col-6 {
@@ -41,20 +58,42 @@ header {
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
+    text-align: center;
 }
 
 .col-9 {
     width: 70%;
     height: 700px;
+    margin-top: 20px;
+    float: left;
+    text-align: center;
 }
 
+.col-9 p {
+    text-align: left;
+}
 
 .hidden {
     display: none;
 }
 
 form {
+    padding: 10px;
     text-align: center;
+    background-color: burlywood;
+    border: 3px solid;
+    border-color: bisque;
+    border-radius: 10px;
+}
+
+input[type=text] {
+    font-family: sans-serif;
+    background-color: bisque;
+}
+
+input[type=submit] {
+    font-family: sans-serif;
+    background-color: bisque;
 }
 
 section {
@@ -63,6 +102,18 @@ section {
     padding-right: 20px;
     margin-top: 20px;
     background-color: burlywood;
+    text-align: left;
+    border: 3px solid;
+    border-color: bisque;
+    border-radius: 10px;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    color: brown;
 }
 
 #videos {
@@ -77,4 +128,7 @@ footer {
     padding-right: 10px;
     padding-top: 5px;
     padding-bottom: 5px;
+    border: 3px solid;
+    border-color: bisque;
+    border-radius: 10px;
 }
