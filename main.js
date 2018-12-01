@@ -46,13 +46,16 @@ function handleYoutubeUrl(response) {
   const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
   const artistGenre = response.artist.tags.tag[0].name;
   const fixedGenre = `${encodeURIComponent(artistGenre)}`
-  const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"%20${fixedGenre}`;
-  return youtubeUrl;
+  if (response.artist.stats.listeners > "100000") {
+    return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"`;;
+  } else {
+    return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"%20${fixedGenre}`;
+  }
 }
 
 function displayResults(response) {
   $(`#instructions`).addClass(`hidden`);
-  $(`#js-error`).empty();
+  $(`#js-error`).addClass(`hidden`);
   $(`#artistinfo`).empty();
   $(`#artistinfo`).removeClass(`hidden`);
   if (response.artist.image[3][`#text`] === "") {
@@ -100,6 +103,7 @@ function getBio(response) {
       }
     })
     .then(responseJson => {
+      console.log(responseJson);
       displayResults(responseJson);
     })
     .catch(err => {
@@ -121,7 +125,9 @@ function callLastFm(URL) {
       getBio(responseJson);
     })
     .catch(err => {
-      $(`#js-error`).text(`Genre not found`);
+      $(`#js-error`).empty();
+      $(`#js-error`).append(`<p>Genre not found. Try again!</p>`);
+      $(`#js-error`).removeClass(`hidden`);
     })
   console.log(`callLastFm working`);
 }
