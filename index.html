@@ -3,28 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>genre-ha</title>
+  <title>genre-ha!</title>
+  <meta name="description" content="With genre-ha you can find new and interesting artists in almost any genre you can think of">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>genre-ha</h1>
+  <header role="banner">
+    <h1>genre-ha!</h1>
     <p>With genre-ha you can find a random artist from a genre you know and love!</p>
-    <p>Powered by last.fm and Youtube</p>
   </header>
-  <form>
+  <form role="form">
     <input type="text" id="genre" placeholder="Enter genre here" required>
     <input type="submit" id="js-submit">
   </form>
   <p id="js-error"></p>
-  <section id="artistinfo">
+  <section id="artistinfo" role="main">
 
   </section>
   <section id="videos">
 
   </section>
+  <footer role="contentinfo">
+    <p>Powered by last.fm and Youtube</p>
+
+  </footer>
   <script src="main.js"></script>
 </body>
 </html>
