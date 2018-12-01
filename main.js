@@ -6,6 +6,7 @@ const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
 function displayYoutube(response) {
   $(`#videos`).empty();
+  $(`#videos`).removeClass(`hidden`);
   $(`#videos`).append(`<h3>Watch on Youtube!</h3>`)
   if (response.items.length === 0) {
     $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure!</p>`)
@@ -50,8 +51,10 @@ function handleYoutubeUrl(response) {
 }
 
 function displayResults(response) {
+  $(`#instructions`).addClass(`hidden`);
   $(`#js-error`).empty();
   $(`#artistinfo`).empty();
+  $(`#artistinfo`).removeClass(`hidden`);
   if (response.artist.image[3][`#text`] === "") {
     $(`#artistinfo`).append(
       `<h2>${response.artist.name}</h2>
