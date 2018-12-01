@@ -46,7 +46,8 @@ function handleYoutubeUrl(response) {
   const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
   const artistGenre = response.artist.tags.tag[0].name;
   const fixedGenre = `${encodeURIComponent(artistGenre)}`
-  if (response.artist.stats.listeners > "100000") {
+  const listeners = Number(response.artist.stats.listeners)
+  if (listeners > 50000) {
     return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"`;;
   } else {
     return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"%20${fixedGenre}`;
@@ -64,9 +65,7 @@ function displayResults(response) {
       <p>Artist image not found</p>
       <p>${response.artist.bio.summary}</p>
       <h3>Similar Artists</h3>
-      <ul id="similar">
-    
-      </ul>`
+      `
     );
   } else {
     $(`#artistinfo`).append(
@@ -103,7 +102,6 @@ function getBio(response) {
       }
     })
     .then(responseJson => {
-      console.log(responseJson);
       displayResults(responseJson);
     })
     .catch(err => {
