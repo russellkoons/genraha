@@ -2,7 +2,6 @@
 
 const apiKey = '601c14869998103548596b0a4d73014d'
 const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E'
-const secret = 'b9f3a060ae7f8dde02e6dca7708f9dea'
 
 function displayYoutube(response) {
   $(`#videos`).empty();
