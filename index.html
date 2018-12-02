@@ -11,18 +11,20 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
-  <header role="banner" class="col-4">
-    <h1>genre-ha!</h1>
-    <p>Discover new music from genres you love!</p>
+  <header role="banner" class="col-4 row">
+    <section>
+      <h1>genre-ha!</h1>
+      <p>Discover new music from genres you love!</p>
+    </section>
+    <section>
+      <form role="form" class="col-4">
+        <input type="text" id="genre" placeholder="Enter genre here" required>
+        <input type="submit" id="js-submit">
+      </form>
+      <p id="js-error"></p>
+    </section>
   </header>
-  <form role="form" class="col-4">
-    <input type="text" id="genre" placeholder="Enter genre here" required>
-    <input type="submit" id="js-submit">
-  </form>
-  <div id="js-error" class="col-4 hidden">
-
-  </div>
-  <div id="container" class="row">
+  <main id="container" class="flex-grid">
     <section id="instructions" class="col-6">
       <h3>Welcome to genre-ha!</h3>
       <p>genre-ha! is a new way to find new artists from genres you already enjoy or to take a deep dive into a genre you know very little about.</p>
@@ -30,18 +32,20 @@
       <p>First you type a genre of music into the search bar...</p>
       <p>Then you just click submit and you'll get a random artist from that genre!</p>
     </section>
-    <section id="artistinfo" role="main" class="col-9 hidden">
+    <section id="artistinfo" role="main" class="col-2 hidden">
       
     </section>
-    <section id="videos" class="col-3 hidden">
+    <section id="videos" class="col-1 hidden">
 
     </section>
-    <footer role="contentinfo" class="col-4">
-    <p>Powered by <a href="https://www.last.fm">last.fm</a> and <a href="https://www.youtube.com">Youtube</a></p>
-    <p>Created and coded by Russell Koons</p>
-    <p>2018</p>
-    </footer>
-  </div>
+  </main>
+  <footer role="contentinfo" class="row">
+    <section class="col-4">
+      <p>Powered by <a href="https://www.last.fm">last.fm</a> and <a href="https://www.youtube.com">Youtube</a></p>
+      <p>Created and coded by Russell Koons</p>
+      <p>2018</p>
+    </section>
+  </footer>
   <script src="main.js"></script>
 </body>
 </html>

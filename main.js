@@ -56,8 +56,8 @@ function handleYoutubeUrl(response) {
 
 function displayResults(response) {
   $(`#instructions`).addClass(`hidden`);
-  $(`#js-error`).addClass(`hidden`);
   $(`#artistinfo`).empty();
+  $(`#js-error`).empty();
   $(`#artistinfo`).removeClass(`hidden`);
   if (response.artist.image[3][`#text`] === "") {
     $(`#artistinfo`).append(
@@ -124,8 +124,7 @@ function callLastFm(URL) {
     })
     .catch(err => {
       $(`#js-error`).empty();
-      $(`#js-error`).append(`<p>Genre not found. Try again!</p>`);
-      $(`#js-error`).removeClass(`hidden`);
+      $(`#js-error`).text(`Genre not found. Try again!`);
     })
   console.log(`callLastFm working`);
 }
