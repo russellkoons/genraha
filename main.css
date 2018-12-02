@@ -5,7 +5,7 @@ html {
     -o-background-size: cover;
     background-size: cover;
     font-family: sans-serif;
-  }
+}
 
 h1 {
     font-family: 'Text Me One', sans-serif;
@@ -29,6 +29,19 @@ h1 {
     clear: both;
 }
 
+.flex-grid {
+    margin: 0 auto 10 auto;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
 .col-1 .col-2 .col-4 .col-6 {
     width: 100%;
 }
@@ -42,7 +55,7 @@ h1 {
 }
 
 form {
-    padding: 10px;
+    display: inline;
     text-align: center;
 }
 
@@ -57,9 +70,7 @@ input[type=submit] {
 }
 
 section {
-    display: inline-block;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 10px 20px 10px 20px;
     margin: 10px auto 10px auto;
     background-color: burlywood;
     text-align: center;
@@ -70,14 +81,6 @@ section {
 
 a {
     color: brown;
-}
-
-footer {
-    margin-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
 }
 
 @media only screen and (min-width: 840px) {
