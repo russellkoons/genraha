@@ -7,6 +7,7 @@ function displayYoutube(response) {
   $(`#videos`).empty();
   $(`#videos`).removeClass(`hidden`);
   $(`#videos`).append(`<h3>Watch on Youtube!</h3>`)
+  // This if/else is used in case the Youtube results return nothing
   if (response.items.length === 0) {
     $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure!</p>`)
   } else {
@@ -19,7 +20,6 @@ function displayYoutube(response) {
       )
     }
   }
-  console.log(`displayYoutube working`);
 }
 
 function callYoutube(URL) {
@@ -35,16 +35,20 @@ function callYoutube(URL) {
       displayYoutube(responseJson);
     })
     .catch(err => {
+      $(`#js-error`).empty();
       $(`#js-error`).text(`Something went wrong: ${err.message}`);
+      $(`#js-error`).removeClass(`hidden`);
     })
-  console.log(`callYoutube working`);
 }
 
 function handleYoutubeUrl(response) {
+  // This function takes the info provided by the second last.fm call and builds a URl to call youtube
   const youtubeName = response.artist.name;
   const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
   const artistGenre = response.artist.tags.tag[0].name;
   const fixedGenre = `${encodeURIComponent(artistGenre)}`
+  // This if/else statement checks to see how many listeners the artist has. I found that if the artist was pretty obscure you would get
+  // weird results in the videos bar. If they have less than 50,000 listeners it adds the genre name to the youtube search
   const listeners = Number(response.artist.stats.listeners)
   if (listeners > 50000) {
     return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"`;;
@@ -58,6 +62,7 @@ function displayResults(response) {
   $(`#js-error`).addClass(`hidden`);
   $(`#artistinfo`).empty();
   $(`#artistinfo`).removeClass(`hidden`);
+  // This if/else checks if the artist has a picture and makes adjustments accordingly
   if (response.artist.image[3][`#text`] === "") {
     $(`#artistinfo`).append(
       `<h2>${response.artist.name}</h2>
@@ -75,6 +80,7 @@ function displayResults(response) {
       `
     );
   }
+  // like the if/else above this one does the same for similar artists
   if (response.artist.similar.artist.length === 0) {
     $(`#artistinfo`).append(`<p>No similar artists found</p>`);
   } else{
@@ -84,10 +90,12 @@ function displayResults(response) {
   }
   const youtubeUrl = handleYoutubeUrl(response);
   callYoutube(youtubeUrl);
-  console.log(`displayResults working`);
 }
 
 function getBio(response) {
+  // Since the information provided in the first call is pretty minimal we have to make a second call after picking a random number
+  // in order to get the random artist's bio, picture and similar artists. According to last.fm's API doc they are okay with multiple calls
+  // as long as it's not "several calls per second"
   let num = Math.floor(Math.random(0, response.topartists.artist.length) * Math.floor(response.topartists.artist.length));
   const name = response.topartists.artist[num].name;
   const fixedName = `${encodeURIComponent(name)}`;
@@ -104,12 +112,14 @@ function getBio(response) {
       displayResults(responseJson);
     })
     .catch(err => {
+      $(`#js-error`).empty();
       $(`#js-error`).text(`Something went wrong: ${err.message}`);
+      $(`#js-error`).removeClass(`hidden`);
     })
-  console.log(`getBio working`);
 }
 
 function callLastFm(URL) {
+  // This calls last.fm to get a list of the 100 top artists from the genre input
   fetch(URL)
     .then(response => {
       if (response.ok) {
@@ -126,25 +136,21 @@ function callLastFm(URL) {
       $(`#js-error`).text(`Genre not found. Try again!`);
       $(`#js-error`).removeClass(`hidden`);
     })
-  console.log(`callLastFm working`);
 }
 
+// These three functions take the input value and build a URL to call last.fm
 
 function createUrl(params) {
-  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${params.tag}&page=${params.page}&api_key=${params.key}&format=json`
+  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${params.tag}&page=1&api_key=${params.key}&format=json`;
   callLastFm(URL);
-  console.log('createUrl working');
 }
 
 function createParams(genre, apiKey) {
-let pageNo = 1
 const params = {
   key: apiKey,
   tag: genre,
-  page: pageNo
-}
+};
 createUrl(params);
-console.log(`createParams working`);
 }
 
 function handleForm() {
@@ -154,7 +160,6 @@ function handleForm() {
     const tag = `${encodeURIComponent(genre)}`;
     createParams(tag, apiKey);
   })
-  console.log('handleForm working');
 }
 
 $(handleForm());

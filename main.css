@@ -90,14 +90,14 @@ a {
         display: flex;
         justify-content: space-between;
     }
+    
+    .col-1 {
+        flex: 1;
+    }
 
     .col-2 {
         flex: 2;
         margin: 0px 10px 0px 10px;
-    }
-    
-    .col-1 {
-        flex: 1;
     }
     
     .col-4 {
