@@ -6,10 +6,10 @@ const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E'
 function displayYoutube(response) {
   $(`#videos`).empty();
   $(`#videos`).removeClass(`hidden`);
-  $(`#videos`).append(`<h3>Watch on Youtube!</h3>`)
+  $(`#videos`).append(`<h3>Watch on Youtube!</h3>`);
   // This if/else is used in case the Youtube results return nothing
   if (response.items.length === 0) {
-    $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure!</p>`)
+    $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure!</p>`);
   } else {
     for (let i = 0; i < response.items.length; i++) {
       $(`#videos`).append(
@@ -17,7 +17,7 @@ function displayYoutube(response) {
         <img src="${response.items[i].snippet.thumbnails.default.url}" alt="${response.items[i].snippet.title}" />
         <p>${response.items[i].snippet.title}</p>
         </a>`
-      )
+      );
     }
   }
 }
@@ -42,7 +42,7 @@ function callYoutube(URL) {
 }
 
 function handleYoutubeUrl(response) {
-  // This function takes the info provided by the second last.fm call and builds a URl to call youtube
+  // This function takes the info provided by the second last.fm call and builds a URL to call youtube
   const youtubeName = response.artist.name;
   const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
   const artistGenre = response.artist.tags.tag[0].name;
