@@ -50,7 +50,7 @@ function handleYoutubeUrl(response) {
   // This if/else statement checks to see how many listeners the artist has. I found that if the artist was pretty obscure you would get
   // weird results in the videos bar. If they have less than 50,000 listeners it adds the genre name to the youtube search
   const listeners = Number(response.artist.stats.listeners)
-  if (listeners > 50000) {
+  if (listeners < 50000) {
     return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"`;;
   } else {
     return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"%20${fixedGenre}`;
