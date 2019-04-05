@@ -1,6 +1,4 @@
-genre-ha!
-
-https://russellkoons.github.io/genre-ha
+# genre-ha!
 
 ![genre-ha!](https://i.imgur.com/8KTwjFx.png)
 
@@ -8,4 +6,11 @@ genre-ha! is a webapp made specifically for genre-nerds like me. All you have to
 
 Obscure suggestions to try: Blackened doom, noise-folk, cloud rap
 
-Made with HTML, CSS and JavaScript
+## Live App
+- [genre-ha!](https://russellkoons.github.io/genre-ha)
+
+## Built With...
+  - HTML
+  - CSS
+  - JavaScript
+  - jQuery
