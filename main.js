@@ -37,8 +37,8 @@ function callYoutube(URL) {
     });
 }
 
+// This function takes the info provided by the second last.fm call and builds a URL to call youtube
 function handleYoutubeUrl(response) {
-  // This function takes the info provided by the second last.fm call and builds a URL to call youtube
   const youtubeName = response.artist.name;
   const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
   const artistGenre = response.artist.tags.tag[0].name;
@@ -85,10 +85,10 @@ function displayResults(response) {
   callYoutube(youtubeUrl);
 }
 
+// Since the information provided in the first call is pretty minimal we have to make a second call after picking a random number
+// in order to get the random artist's bio, picture and similar artists. According to last.fm's API doc they are okay with multiple calls
+// as long as it's not "several calls per second"
 function getBio(response) {
-  // Since the information provided in the first call is pretty minimal we have to make a second call after picking a random number
-  // in order to get the random artist's bio, picture and similar artists. According to last.fm's API doc they are okay with multiple calls
-  // as long as it's not "several calls per second"
   let num = Math.floor(Math.random(0, response.topartists.artist.length) * Math.floor(response.topartists.artist.length));
   const name = response.topartists.artist[num].name;
   const fixedName = `${encodeURIComponent(name)}`;
@@ -109,8 +109,8 @@ function getBio(response) {
     });
 }
 
+// This calls last.fm to get a list of the 100 top artists from the genre input
 function callLastFm(URL) {
-  // This calls last.fm to get a list of the 100 top artists from the genre input
   fetch(URL)
     .then(response => {
       if (response.ok) {
@@ -127,19 +127,10 @@ function callLastFm(URL) {
     });
 }
 
-// These three functions take the input value and build a URL to call last.fm
-
-function createUrl(params) {
-  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${params.tag}&page=1&api_key=${params.key}&format=json`;
+// These two functions take the input value and build a URL to call last.fm
+function createUrl(tag, key) {
+  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${tag}&page=1&api_key=${key}&format=json`;
   callLastFm(URL);
-}
-
-function createParams(genre, apiKey) {
-  const params = {
-    key: apiKey,
-    tag: genre,
-  }
-  createUrl(params);
 }
 
 function handleForm() {
@@ -147,7 +138,7 @@ function handleForm() {
     event.preventDefault();
     const genre = $('#genre').val();
     const tag = `${encodeURIComponent(genre)}`;
-    createParams(tag, apiKey);
+    createUrl(tag, apiKey);
   })
 }
 
