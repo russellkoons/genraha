@@ -58,7 +58,7 @@ function displayResults(response) {
   $('#js-error').addClass('hidden');
   $('#artistinfo').empty().removeClass('hidden');
   // This if/else checks if the artist has a picture and makes adjustments accordingly
-  if (response.artist.image[3]['#text'] === "") {
+  if (response.artist.image[3]['#text'] === '') {
     $('#artistinfo').append(`
       <h2>${response.artist.name}</h2>
       <p>Artist image not found</p>
