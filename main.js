@@ -4,7 +4,7 @@ const apiKey = '601c14869998103548596b0a4d73014d'
 const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E'
 
 function displayYoutube(response) {
-  $('#videos').empty().removeClass('hidden').append(`<h3>Watch on Youtube!</h3>`);
+  $('#videos').empty().removeClass('hidden').append('<h3>Watch on Youtube!</h3>');
   // This if/else is used in case the Youtube results return nothing
   if (response.items.length === 0) {
     $('#videos').append('<p>No Youtube videos found. This one must be REALLY obscure!</p>');
@@ -34,7 +34,7 @@ function callYoutube(URL) {
     })
     .catch(err => {
       $('#js-error').empty().text(`Something went wrong: ${err.message}`).removeClass('hidden');
-    })
+    });
 }
 
 function handleYoutubeUrl(response) {
@@ -42,12 +42,12 @@ function handleYoutubeUrl(response) {
   const youtubeName = response.artist.name;
   const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
   const artistGenre = response.artist.tags.tag[0].name;
-  const fixedGenre = `${encodeURIComponent(artistGenre)}`
+  const fixedGenre = `${encodeURIComponent(artistGenre)}`;
   // This if/else statement checks to see how many listeners the artist has. I found that if the artist was pretty obscure you would get
   // weird results in the videos bar. If they have less than 50,000 listeners it adds the genre name to the youtube search
   const listeners = Number(response.artist.stats.listeners)
   if (listeners < 50000) {
-    return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"`;;
+    return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"`;
   } else {
     return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"%20${fixedGenre}`;
   }
@@ -106,7 +106,7 @@ function getBio(response) {
     })
     .catch(err => {
       $('#js-error').empty().text(`Something went wrong: ${err.message}`).removeClass('hidden');
-    })
+    });
 }
 
 function callLastFm(URL) {
@@ -124,7 +124,7 @@ function callLastFm(URL) {
     })
     .catch(err => {
       $('#js-error').empty().text('Genre not found. Try again!').removeClass('hidden');
-    })
+    });
 }
 
 // These three functions take the input value and build a URL to call last.fm
@@ -138,7 +138,7 @@ function createParams(genre, apiKey) {
   const params = {
     key: apiKey,
     tag: genre,
-  };
+  }
   createUrl(params);
 }
 
