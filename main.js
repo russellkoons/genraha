@@ -4,20 +4,18 @@ const apiKey = '601c14869998103548596b0a4d73014d'
 const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E'
 
 function displayYoutube(response) {
-  $(`#videos`).empty();
-  $(`#videos`).removeClass(`hidden`);
-  $(`#videos`).append(`<h3>Watch on Youtube!</h3>`);
+  $('#videos').empty().removeClass('hidden').append(`<h3>Watch on Youtube!</h3>`);
   // This if/else is used in case the Youtube results return nothing
   if (response.items.length === 0) {
-    $(`#videos`).append(`<p>No Youtube videos found. This one must be REALLY obscure!</p>`);
+    $('#videos').append('<p>No Youtube videos found. This one must be REALLY obscure!</p>');
   } else {
     for (let i = 0; i < response.items.length; i++) {
-      $(`#videos`).append(
-        `<a href="https://www.youtube.com/watch?v=${response.items[i].id.videoId}">
+      $('#videos').append(`
+        <a href="https://www.youtube.com/watch?v=${response.items[i].id.videoId}">
         <img src="${response.items[i].snippet.thumbnails.default.url}" alt="${response.items[i].snippet.title}" />
         <p>${response.items[i].snippet.title}</p>
-        </a>`
-      );
+        </a>
+      `);
     }
   }
 }
@@ -35,9 +33,7 @@ function callYoutube(URL) {
       displayYoutube(responseJson);
     })
     .catch(err => {
-      $(`#js-error`).empty();
-      $(`#js-error`).text(`Something went wrong: ${err.message}`);
-      $(`#js-error`).removeClass(`hidden`);
+      $('#js-error').empty().text(`Something went wrong: ${err.message}`).removeClass('hidden');
     })
 }
 
@@ -58,34 +54,31 @@ function handleYoutubeUrl(response) {
 }
 
 function displayResults(response) {
-  $(`#instructions`).addClass(`hidden`);
-  $(`#js-error`).addClass(`hidden`);
-  $(`#artistinfo`).empty();
-  $(`#artistinfo`).removeClass(`hidden`);
+  $('#instructions').addClass('hidden');
+  $('#js-error').addClass('hidden');
+  $('#artistinfo').empty().removeClass('hidden');
   // This if/else checks if the artist has a picture and makes adjustments accordingly
-  if (response.artist.image[3][`#text`] === "") {
-    $(`#artistinfo`).append(
-      `<h2>${response.artist.name}</h2>
+  if (response.artist.image[3]['#text'] === "") {
+    $('#artistinfo').append(`
+      <h2>${response.artist.name}</h2>
       <p>Artist image not found</p>
       <p>${response.artist.bio.summary}</p>
       <h3>Similar Artists</h3>
-      `
-    );
+    `);
   } else {
-    $(`#artistinfo`).append(
-      `<h2>${response.artist.name}</h2>
+    $('#artistinfo').append(`
+      <h2>${response.artist.name}</h2>
       <img src="${response.artist.image[3][`#text`]}" alt="${response.artist.name}" />
       <p>${response.artist.bio.summary}</p>
       <h3>Similar Artists</h3>
-      `
-    );
+    `);
   }
   // like the if/else above this one does the same for similar artists
   if (response.artist.similar.artist.length === 0) {
-    $(`#artistinfo`).append(`<p>No similar artists found</p>`);
+    $('#artistinfo').append('<p>No similar artists found</p>');
   } else{
     for (let i = 0; i < response.artist.similar.artist.length; i++) {
-      $(`#artistinfo`).append(`<a href="${response.artist.similar.artist[i].url}">${response.artist.similar.artist[i].name}</a><br />`);
+      $('#artistinfo').append(`<a href="${response.artist.similar.artist[i].url}">${response.artist.similar.artist[i].name}</a><br />`);
     }
   }
   const youtubeUrl = handleYoutubeUrl(response);
@@ -112,9 +105,7 @@ function getBio(response) {
       displayResults(responseJson);
     })
     .catch(err => {
-      $(`#js-error`).empty();
-      $(`#js-error`).text(`Something went wrong: ${err.message}`);
-      $(`#js-error`).removeClass(`hidden`);
+      $('#js-error').empty().text(`Something went wrong: ${err.message}`).removeClass('hidden');
     })
 }
 
@@ -132,9 +123,7 @@ function callLastFm(URL) {
       getBio(responseJson);
     })
     .catch(err => {
-      $(`#js-error`).empty();
-      $(`#js-error`).text(`Genre not found. Try again!`);
-      $(`#js-error`).removeClass(`hidden`);
+      $('#js-error').empty().text('Genre not found. Try again!').removeClass('hidden');
     })
 }
 
@@ -146,17 +135,17 @@ function createUrl(params) {
 }
 
 function createParams(genre, apiKey) {
-const params = {
-  key: apiKey,
-  tag: genre,
-};
-createUrl(params);
+  const params = {
+    key: apiKey,
+    tag: genre,
+  };
+  createUrl(params);
 }
 
 function handleForm() {
-  $(`#js-submit`).click(event => {
+  $('#js-submit').click(event => {
     event.preventDefault();
-    const genre = $(`#genre`).val();
+    const genre = $('#genre').val();
     const tag = `${encodeURIComponent(genre)}`;
     createParams(tag, apiKey);
   })
