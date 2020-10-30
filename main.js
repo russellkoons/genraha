@@ -89,8 +89,8 @@ function displayResults(response) {
 function getBio(response) {
   let num = Math.floor(Math.random(0, response.topartists.artist.length) * Math.floor(response.topartists.artist.length));
   const fixedName = `${encodeURIComponent(response.topartists.artist[num].name)}`;
-  const bioURL = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
-  fetch(bioURL)
+  const bioUrl = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
+  fetch(bioUrl)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -107,8 +107,8 @@ function getBio(response) {
 }
 
 // This calls last.fm to get a list of the 100 top artists from the genre input
-function callLastFm(URL) {
-  fetch(URL)
+function callLastFm(url) {
+  fetch(url)
     .then(response => {
       if (response.ok) {
         return response.json();
