@@ -84,7 +84,7 @@ function displayResults(response) {
 }
 
 // Since the information provided in the first call is pretty minimal we have to make a second call after picking a random number
-// in order to get the random artist's bio, picture and similar artists. According to last.fm's API doc they are okay with multiple calls
+// in order to get the random artist's bio, picture and similar artists. According to last.fm's API docs they are okay with multiple calls
 // as long as it's not "several calls per second"
 function getBio(response) {
   let num = Math.floor(Math.random(0, response.topartists.artist.length) * Math.floor(response.topartists.artist.length));
