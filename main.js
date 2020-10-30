@@ -1,7 +1,7 @@
 'use strict';
 
-const apiKey = '601c14869998103548596b0a4d73014d'
-const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E'
+const apiKey = '601c14869998103548596b0a4d73014d';
+const youtubeKey = 'AIzaSyBTltE9s9vSXGRZNhAg7d2KOEKvHVNje9E';
 
 function displayYoutube(response) {
   $('#videos').empty().removeClass('hidden').append('<h3>Watch on Youtube!</h3>');
