@@ -39,13 +39,11 @@ function callYoutube(URL) {
 
 // This function takes the info provided by the second last.fm call and builds a URL to call youtube
 function handleYoutubeUrl(response) {
-  const youtubeName = response.artist.name;
-  const fixedYoutube = `${encodeURIComponent(youtubeName)}`;
-  const artistGenre = response.artist.tags.tag[0].name;
-  const fixedGenre = `${encodeURIComponent(artistGenre)}`;
+  const fixedYoutube = `${encodeURIComponent(response.artist.name)}`;
+  const fixedGenre = `${encodeURIComponent(response.artist.tags.tag[0].name)}`;
   // This if/else statement checks to see how many listeners the artist has. I found that if the artist was pretty obscure you would get
   // weird results in the videos bar. If they have less than 50,000 listeners it adds the genre name to the youtube search
-  const listeners = Number(response.artist.stats.listeners)
+  const listeners = Number(response.artist.stats.listeners);
   if (listeners < 50000) {
     return `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&key=${youtubeKey}&q="${fixedYoutube}"`;
   } else {
@@ -90,8 +88,7 @@ function displayResults(response) {
 // as long as it's not "several calls per second"
 function getBio(response) {
   let num = Math.floor(Math.random(0, response.topartists.artist.length) * Math.floor(response.topartists.artist.length));
-  const name = response.topartists.artist[num].name;
-  const fixedName = `${encodeURIComponent(name)}`;
+  const fixedName = `${encodeURIComponent(response.topartists.artist[num].name)}`;
   const bioURL = `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${fixedName}&api_key=${apiKey}&format=json`;
   fetch(bioURL)
     .then(response => {
@@ -127,19 +124,15 @@ function callLastFm(URL) {
     });
 }
 
-// These two functions take the input value and build a URL to call last.fm
-function createUrl(tag, key) {
-  const URL = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${tag}&page=1&api_key=${key}&format=json`;
-  callLastFm(URL);
-}
-
+// This function takes the input value and builds a URL to call last.fm
 function handleForm() {
   $('#js-submit').click(event => {
     event.preventDefault();
     const genre = $('#genre').val();
     const tag = `${encodeURIComponent(genre)}`;
-    createUrl(tag, apiKey);
-  })
+    const url = `https://ws.audioscrobbler.com/2.0/?method=tag.gettopartists&limit=100&tag=${tag}&page=1&api_key=${apiKey}&format=json`;
+    callLastFm(url);
+  });
 }
 
 $(handleForm());
